@@ -324,6 +324,60 @@ namespace JsonParser {
      * 
      */
 
+
+
+    /// ========== Helper Functions ==========
+    
+    template<class T> inline std::string formatNumber(T value, int varPrecision=2) {
+        std::stringstream tempStream;
+        tempStream << std::fixed << std::setprecision(varPrecision) << value;
+        return tempStream.str();
+    }
+    template<class T> inline std::string formatNumber(T value, int strWidth, int varPrecision, std::string align, bool numberFill) {
+        std::stringstream outStream, _temp;
+        int fillZeros = 0;
+        if(numberFill && align=="right") {
+            _temp << std::fixed;
+            _temp << std::setprecision(varPrecision) << value;
+            if(static_cast<int>(_temp.str().length()) < strWidth) fillZeros = strWidth - static_cast<int>(_temp.str().length());
+        }
+        outStream << std::fixed;
+        outStream << std::boolalpha;
+        if(align=="left") outStream<<std::left;
+        else if(align=="right") outStream<<std::right;
+        outStream << std::setw(strWidth - fillZeros);
+        if(numberFill && align=="right") outStream << std::string(fillZeros, '0');
+        // outStream << (align=="left"? std::left : std::right);
+        outStream << std::setprecision(varPrecision) << value;
+
+        return outStream.str();
+    }
+
+    /**
+     * @brief Get the value of a desired value
+     * 
+     * @tparam varType value type
+     * @param toCheck the container to check
+     * @param toFind what to find.
+     * ```
+     * - `0` - biggest value
+     * - `1` - smallest value
+     * ```
+     * @return The desired element
+     */
+    template<typename varType>
+    inline varType findVal(std::vector<varType> toCheck, int toFind) {
+        int index = 0;
+        varType val = toCheck[0];
+        for(int i=0; i<toCheck.size(); i++) {
+            if(toFind==0 || toFind==2) {    if(toCheck[i]>val) { val=toCheck[i]; index=i; } }
+            else if(toFind==1 || toFind==3){if(toCheck[i]<val) { val=toCheck[i]; index=i; } }
+        }
+        if(toFind==0 || toFind==1) return val;
+        else if(toFind==2 || toFind==3) return index;
+        else return -1;
+    }
+
 };
 
 

@@ -235,7 +235,7 @@ std::string const& JsonParser::jsonPair::toStr(
         }
     }
 
-    if(_verbose) std::cout << formatNumber("val_LineB",10,0,"left")<<":" << std::boolalpha << val_LineB << std::endl;
+    if(_verbose) std::cout << formatNumber("val_LineB", 10, 0, "left")<<":" << std::boolalpha << val_LineB << std::endl;
 
     if(_indent_pair) out += std::string(_indent, ' ');
     if(!(_no_key || _onlyVal)) {
@@ -250,7 +250,7 @@ std::string const& JsonParser::jsonPair::toStr(
         out += "\n";// + std::string(_indent, ' ');
     }
 
-    if(_verbose) std::cout << formatNumber("out: ",10,0,"left")<<": [\"" << out << "\"]" << std::endl;
+    if(_verbose) std::cout << formatNumber("out: ", 10, 0, "left")<<": [\"" << out << "\"]" << std::endl;
 
     int len1_key    = 0;
     int len1_val    = 0;
@@ -276,7 +276,7 @@ std::string const& JsonParser::jsonPair::toStr(
     }
     else {
         if(_verbose) {
-            std::cout << formatNumber("value",10,0,"left")<<": ";
+            std::cout << formatNumber("value", 10, 0, "left")<<": ";
             switch (_type) {
                 case  0: std::cout<<_value_0;  break;
                 case 10: std::cout<<_value_10; break;
@@ -558,7 +558,7 @@ int JsonParser::jsonPair::loadFile(
      *    - [1]/.y - if [0] value is an array or a json object (which it has to be if another jsonPair/_tempPairs-element is indexed to it), [1] refers to the element indenx
      * 
      */
-    std::vector<pos2d<int>> _pairLoc;
+    std::vector<Pos2d<int>> _pairLoc;
 
     std::fstream _file;
     _file.open(filename, std::fstream::in);
@@ -876,7 +876,7 @@ int JsonParser::Parser::loadFile(
      *    - [1]/.y - if [0] value is an array or a json object (which it has to be if another jsonPair/_tempPairs-element is indexed to it), [1] refers to the element indenx
      * 
      */
-    std::vector<pos2d<int>> _pairLoc;
+    std::vector<Pos2d<int>> _pairLoc;
 
     std::fstream _file;
     _file.open(filename, std::fstream::in);
@@ -1079,7 +1079,7 @@ int JsonParser::Parser::loadFile(
                     //  * 
                     //  */
                     // _tempPairs.push_back(JsonParser::jsonPair("", {}, false));
-                    // _pairLoc.push_back(pos2d(currDepth, currElem)); //update where the "new" jsonPair is located (index to "parent" jsonPair)
+                    // _pairLoc.push_back(Pos2d(currDepth, currElem)); //update where the "new" jsonPair is located (index to "parent" jsonPair)
                     // // current++;
                     // currDepth++;
 

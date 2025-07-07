@@ -12,7 +12,7 @@ template<class T>
 inline std::string formatNumber(
     T value,
     int strWidth,
-    int varPrecision    1,
+    int varPrecision    = 1,
     std::string align   = "right",
     bool numberFill     = false
 ) {

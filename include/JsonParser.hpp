@@ -14,7 +14,7 @@
 #include <memory>
 #include <cassert>
 
-// #include <useful.hpp>
+#include <useful.hpp>
 
 
 #define _WIDTH_AUTO     -69420      // Width of the value it holds

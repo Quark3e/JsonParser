@@ -235,7 +235,7 @@ std::string const& JsonParser::jsonPair::toStr(
         }
     }
 
-    if(_verbose) std::cout << formatNumber("val_LineB", 10, 0, "left")<<":" << std::boolalpha << val_LineB << std::endl;
+    if(_verbose) std::cout << formatNumber<std::string>("val_LineB", 10, 0, "left")<<":" << std::boolalpha << val_LineB << std::endl;
 
     if(_indent_pair) out += std::string(_indent, ' ');
     if(!(_no_key || _onlyVal)) {

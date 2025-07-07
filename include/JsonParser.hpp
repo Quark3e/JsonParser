@@ -14,7 +14,6 @@
 #include <memory>
 #include <cassert>
 
-#include <useful.hpp>
 
 
 #define _WIDTH_AUTO     -69420      // Width of the value it holds
@@ -327,13 +326,15 @@ namespace JsonParser {
 
 
     /// ========== Helper Functions ==========
-    
-    template<class T> inline std::string formatNumber(T value, int varPrecision=2) {
-        std::stringstream tempStream;
-        tempStream << std::fixed << std::setprecision(varPrecision) << value;
-        return tempStream.str();
-    }
-    template<class T> inline std::string formatNumber(T value, int strWidth, int varPrecision, std::string align, bool numberFill) {
+        
+    template<class T>
+    inline std::string formatNumber(
+        T value,
+        int strWidth,
+        int varPrecision    = 1,
+        std::string align   = "right",
+        bool numberFill     = false
+    ) {
         std::stringstream outStream, _temp;
         int fillZeros = 0;
         if(numberFill && align=="right") {
@@ -353,29 +354,65 @@ namespace JsonParser {
         return outStream.str();
     }
 
-    /**
-     * @brief Get the value of a desired value
-     * 
-     * @tparam varType value type
-     * @param toCheck the container to check
-     * @param toFind what to find.
-     * ```
-     * - `0` - biggest value
-     * - `1` - smallest value
-     * ```
-     * @return The desired element
-     */
-    template<typename varType>
-    inline varType findVal(std::vector<varType> toCheck, int toFind) {
-        int index = 0;
-        varType val = toCheck[0];
-        for(int i=0; i<toCheck.size(); i++) {
-            if(toFind==0 || toFind==2) {    if(toCheck[i]>val) { val=toCheck[i]; index=i; } }
-            else if(toFind==1 || toFind==3){if(toCheck[i]<val) { val=toCheck[i]; index=i; } }
+    template<class T>
+    inline std::string formatContainer(
+        T _container,
+        int strWidth,
+        int varPrecision,
+        std::string align = "right",
+        bool numberFill = false,
+        char openSymb   = '{',
+        char closeSymb  = '}',
+        char _sepSymb   = ','
+    ) {
+        std::string _out(1, openSymb);
+        for(auto itr=_container.begin(); itr!=_container.end(); ++itr) {
+            _out += formatNumber(*itr, strWidth, varPrecision, align, numberFill);
+            if(itr!=--_container.end()) openSymb += _sepSymb;
         }
-        if(toFind==0 || toFind==1) return val;
-        else if(toFind==2 || toFind==3) return index;
-        else return -1;
+        return _out + closeSymb;
+    }
+
+    template<class T>
+    inline std::string formatVector(
+        std::vector<T>  _container,
+        int             _strWidth   = 0,
+        int             _precision  = 1,
+        std::string     _align      = "right",
+        bool            _numberFill = false,
+        char            _openSymb   = '{',
+        char            _closeSymb  = '}',
+        char            _sepSymb    = ',',
+        size_t          _startIdx   = 0,
+        size_t          _endIdx     = std::string::npos
+    ) {
+        std::string _out(1, _openSymb);
+        size_t endIdx = (_endIdx==std::string::npos? _container.size() : _endIdx);
+        for(size_t i=_startIdx; i<endIdx; i++) {
+            _out += formatNumber(_container[i], _strWidth, _precision, _align, _numberFill);
+            if(i<endIdx-1) _out += _sepSymb;
+        }
+        return _out + _closeSymb;
+    }
+
+    template<class T>
+    inline std::string formatContainer1(
+        T _container,
+        size_t contSize,
+        int strWidth,
+        int varPrecision,
+        std::string align = "right",
+        bool numberFill = false,
+        char openSymb   = '{',
+        char closeSymb  = '}',
+        char _sepSymb   = ','
+    ) {
+        std::string _out(1, openSymb);
+        for(size_t i=0; i<contSize; i++) {
+            _out += formatNumber(_container[i], strWidth, varPrecision, align, numberFill);
+            if(i<contSize-1) _out += _sepSymb;
+        }
+        return _out + closeSymb;
     }
 
 };

@@ -258,12 +258,12 @@ std::string const& JsonParser::jsonPair::toStr(
     //     switch (_width_val) {
     //     case _WIDTH_MAX: break;
     //     case _WIDTH_MAX_KEY:
-            if(_type==2) {
-                std::vector<size_t> key1Len{0};
+            // if(_type==2) {
+            //     std::vector<size_t> key1Len{0};
 
-                for(auto el: _value_2) key1Len.push_back(el.key.length());
-                len1_key = findVal<size_t>(key1Len, 0);
-            }
+            //     for(auto el: _value_2) key1Len.push_back(el.key.length());
+            //     len1_key = findVal<size_t>(key1Len, 0);
+            // }
     //         break;
     //     }
     // }

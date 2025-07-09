@@ -14,6 +14,7 @@ add_library(JsonParser STATIC
 )
 add_library(JsonParser::JsonParser ALIAS JsonParser)
 
+target_include_directories(JsonParser PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/lib//Pos2d/include/")
 target_include_directories(JsonParser PUBLIC ${DIR_HEADERS})
 
 include(GNUInstallDirs)
